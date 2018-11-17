@@ -1,0 +1,110 @@
+{
+	"info": {
+		"_postman_id": "aa52104b-c368-4e20-9e4d-07d7cb421f9a",
+		"name": "Marvel API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Marvel API Basic Query",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Marvel API Basic Query script",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://gateway.marvel.com:443/v1/public/characters?ts={{timestamp}}&apikey={{pubkey}}&hash={{hash}}",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "997b10eb-dd2c-4c34-b556-74f670269787",
+						"exec": [
+							"var timestamp_str = new Date().getTime();\r",
+							"var pubkey_str = \"f12fb6139c5db7d738957872c8ef2ea3\";\r",
+							"var privkey_str = \"57102709ede8e18c834355412725e78f51327e95\";\r",
+							"\r",
+							"var str_1 =  timestamp_str + privkey_str + pubkey_str;\r",
+							"\r",
+							"// Use the CryptoJS\r",
+							"var hash = CryptoJS.MD5(str_1).toString();\r",
+							"\r",
+							"pm.environment.set(\"timestamp\", timestamp_str);\r",
+							"pm.environment.set(\"pubkey\", pubkey_str);\r",
+							"pm.environment.set(\"variable_key\", privkey_str);\r",
+							"pm.environment.set('hash', hash);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://gateway.marvel.com:443/v1/public/characters?ts={{timestamp}}&apikey={{pubkey}}&hash={{hash}}",
+					"protocol": "https",
+					"host": [
+						"gateway",
+						"marvel",
+						"com"
+					],
+					"port": "443",
+					"path": [
+						"v1",
+						"public",
+						"characters"
+					],
+					"query": [
+						{
+							"key": "ts",
+							"value": "{{timestamp}}"
+						},
+						{
+							"key": "apikey",
+							"value": "{{pubkey}}"
+						},
+						{
+							"key": "hash",
+							"value": "{{hash}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
